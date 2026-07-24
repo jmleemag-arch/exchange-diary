@@ -57,5 +57,7 @@ data/uploads/*
 !data/uploads/.gitkeep
 !data/uploads/diaries/
 !data/uploads/profiles/
+!data/uploads/moments/
 !data/uploads/diaries/.gitkeep
 !data/uploads/profiles/.gitkeep
+!data/uploads/moments/.gitkeep

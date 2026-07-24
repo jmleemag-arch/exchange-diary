@@ -5,6 +5,7 @@ import { MiniCalendar } from "@/components/home/MiniCalendar";
 import { RecentDiaryList } from "@/components/home/RecentDiaryList";
 import { WriteDiaryButton } from "@/components/home/WriteDiaryButton";
 import { WritingStatusCard } from "@/components/home/WritingStatusCard";
+import { MomentsCard } from "@/components/moments/MomentsCard";
 import { getPublishedDatesInMonth } from "@/app/actions/diaries";
 
 export default async function Home() {
@@ -34,12 +35,7 @@ export default async function Home() {
               markedDays={markedDays}
               today={now.getDate()}
             />
-            <section className="rounded-[22px] border border-dashed border-border bg-surface px-5 py-6 text-center shadow-[var(--shadow-sm)]">
-              <p className="text-sm font-medium text-text-primary">준비 중</p>
-              <p className="mt-1 text-xs text-text-muted">
-                공통 질문·Our Moments는 다음 단계에서 연결할 예정이에요.
-              </p>
-            </section>
+            <MomentsCard />
           </aside>
         </div>
       </div>

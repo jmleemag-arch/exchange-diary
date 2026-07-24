@@ -5,6 +5,7 @@ import { DiaryListHeader } from "@/components/diaries/DiaryListHeader";
 import { DiaryListPagination } from "@/components/diaries/DiaryListPagination";
 import { DiaryListToolbar } from "@/components/diaries/DiaryListToolbar";
 import { MiniCalendar } from "@/components/home/MiniCalendar";
+import { MomentsCard } from "@/components/moments/MomentsCard";
 import { getDiaryList, getPublishedDatesInMonth } from "@/app/actions/diaries";
 import { prisma } from "@/lib/prisma";
 
@@ -64,9 +65,7 @@ export default async function DiariesPage({ searchParams }: Props) {
               markedDays={markedDays}
               today={now.getDate()}
             />
-            <section className="rounded-[22px] border border-dashed border-border bg-surface px-5 py-6 text-center text-sm text-text-muted">
-              Our Moments · 준비 중
-            </section>
+            <MomentsCard />
           </aside>
         </div>
       </div>

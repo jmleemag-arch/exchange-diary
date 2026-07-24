@@ -1,5 +1,6 @@
 import { AppShell } from "@/components/layout/AppShell";
 import { MiniCalendar } from "@/components/home/MiniCalendar";
+import { MomentsCard } from "@/components/moments/MomentsCard";
 import { SettingsGuideCard } from "@/components/settings/SettingsGuideCard";
 import { SettingsHeader } from "@/components/settings/SettingsHeader";
 import { SettingsPanel } from "@/components/settings/SettingsPanel";
@@ -72,9 +73,7 @@ export default async function SettingsPage() {
               markedDays={markedDays}
               today={now.getDate()}
             />
-            <section className="rounded-[22px] border border-dashed border-border bg-surface px-5 py-6 text-center text-sm text-text-muted">
-              Our Moments · 준비 중
-            </section>
+            <MomentsCard />
             <SettingsGuideCard />
           </aside>
         </div>

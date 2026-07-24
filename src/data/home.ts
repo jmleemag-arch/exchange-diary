@@ -1,6 +1,7 @@
 export const navItems = [
   { id: "today", label: "오늘의 일기", href: "/" },
   { id: "list", label: "일기 목록", href: "/diaries" },
+  { id: "moments", label: "Our Moments", href: "/moments" },
   { id: "notifications", label: "알림", href: "/notifications" },
   { id: "settings", label: "설정", href: "/settings" },
 ] as const;

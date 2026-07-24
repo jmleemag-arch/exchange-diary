@@ -2,6 +2,7 @@ import {
   Bell,
   CalendarDays,
   Heart,
+  Images,
   List,
   Settings,
   SunMedium,
@@ -16,6 +17,7 @@ import { prisma } from "@/lib/prisma";
 const icons = {
   today: SunMedium,
   list: List,
+  moments: Images,
   notifications: Bell,
   settings: Settings,
 } as const;

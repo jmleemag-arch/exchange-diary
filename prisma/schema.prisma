@@ -26,6 +26,7 @@ model User {
   preference     UserPreference?
   diaries        Diary[]
   comments       Comment[]
+  moments        Moment[]
   notifications  Notification[] @relation("RecipientNotifications")
   actedNotifs    Notification[] @relation("ActorNotifications")
 }
@@ -133,4 +134,16 @@ model DailyQuestion {
   date      DateTime @unique
   content   String
   createdAt DateTime @default(now())
+}
+
+model Moment {
+  id        String   @id @default(cuid())
+  uploaderId String
+  imagePath String
+  caption   String?
+  createdAt DateTime @default(now())
+
+  uploader User @relation(fields: [uploaderId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
 }
