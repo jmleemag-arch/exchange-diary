@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8f7f4;
+  --surface: #ffffff;
+  --surface-soft: #fbf8f6;
+  --text-primary: #262626;
+  --text-secondary: #737373;
+  --text-muted: #a3a3a3;
+  --border: #ece9e5;
+  --accent: #f38b88;
+  --accent-soft: #fcebea;
+  --success: #62a878;
+  --shadow: 0 4px 16px rgba(38, 38, 38, 0.04);
+  --radius-card: 18px;
+  --radius-card-sm: 14px;
+  --radius-control: 12px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --font-sans: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo",
+    "Noto Sans KR", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 70%, white);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--text-primary);
+}
