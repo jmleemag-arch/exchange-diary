@@ -1,8 +1,7 @@
 import { AppShell } from "@/components/layout/AppShell";
 import { DiaryEditor } from "@/components/diary/DiaryEditor";
-import {
-  getTodayDiaryForCurrentUser,
-} from "@/app/actions/diaries";
+import { getTodayDiaryForCurrentUser } from "@/app/actions/diaries";
+import { getTodayQuestion } from "@/app/actions/questions";
 import { getCurrentUser } from "@/lib/auth/session";
 import { redirect } from "next/navigation";
 import Link from "next/link";
@@ -11,7 +10,10 @@ export default async function NewDiaryPage() {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
 
-  const todayDiary = await getTodayDiaryForCurrentUser();
+  const [todayDiary, todayQuestion] = await Promise.all([
+    getTodayDiaryForCurrentUser(),
+    getTodayQuestion(),
+  ]);
 
   if (todayDiary?.status === "PUBLISHED") {
     return (
@@ -54,6 +56,7 @@ export default async function NewDiaryPage() {
         <DiaryEditor
           mode="create"
           initialContent={todayDiary?.content ?? ""}
+          todayQuestion={todayQuestion?.content ?? null}
         />
       </div>
     </AppShell>

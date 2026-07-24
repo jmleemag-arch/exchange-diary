@@ -1,5 +1,5 @@
-import { updateDiary } from "@/app/actions/diaries";
-import { getDiaryForViewer } from "@/app/actions/diaries";
+import { updateDiary, getDiaryForViewer } from "@/app/actions/diaries";
+import { getTodayQuestion } from "@/app/actions/questions";
 import { AppShell } from "@/components/layout/AppShell";
 import { DiaryEditor } from "@/components/diary/DiaryEditor";
 import { redirect } from "next/navigation";
@@ -8,7 +8,10 @@ type Props = { params: Promise<{ id: string }> };
 
 export default async function EditDiaryPage({ params }: Props) {
   const { id } = await params;
-  const result = await getDiaryForViewer(id);
+  const [result, todayQuestion] = await Promise.all([
+    getDiaryForViewer(id),
+    getTodayQuestion(),
+  ]);
 
   if (!result) redirect("/diaries");
   const { diary, currentUser } = result;
@@ -34,6 +37,7 @@ export default async function EditDiaryPage({ params }: Props) {
           diaryId={diary.id}
           initialContent={diary.content}
           alreadyPublished={diary.status === "PUBLISHED"}
+          todayQuestion={todayQuestion?.content ?? null}
           onUpdate={handleUpdate}
         />
       </div>
