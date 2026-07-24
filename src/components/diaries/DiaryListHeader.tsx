@@ -1,17 +1,17 @@
 import { currentUser } from "@/data/home";
-import { Bell, ChevronDown, Sun } from "lucide-react";
+import { Bell, ChevronDown, NotebookText } from "lucide-react";
 import Image from "next/image";
 
-export function HomeHeader() {
+export function DiaryListHeader() {
   return (
-    <header className="mb-6 flex items-start justify-between gap-4">
+    <header className="mb-5 flex items-start justify-between gap-4">
       <div>
         <h1 className="flex items-center gap-2 text-[28px] font-bold tracking-tight text-text-primary sm:text-[30px]">
-          오늘의 교환일기
-          <Sun className="h-6 w-6 text-[#f0b45a]" aria-hidden />
+          일기 목록
+          <NotebookText className="h-6 w-6 text-accent" aria-hidden />
         </h1>
         <p className="mt-2 text-[14px] leading-relaxed text-text-secondary">
-          매일 서로의 하루를 나누며 더 가까워져요.
+          우리가 함께 써 내려간 하루의 기록들
         </p>
       </div>
 
@@ -35,9 +35,6 @@ export function HomeHeader() {
             height={36}
             className="h-9 w-9 rounded-full object-cover"
           />
-          <span className="text-sm font-medium text-text-primary">
-            {currentUser.name}
-          </span>
           <ChevronDown className="h-4 w-4 text-text-muted" />
         </button>
       </div>
