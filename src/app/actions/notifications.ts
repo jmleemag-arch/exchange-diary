@@ -9,6 +9,7 @@ import { NotificationType, Prisma } from "@prisma/client";
 export type NotificationFilter =
   | "all"
   | "unread"
+  | "diary"
   | "comment"
   | "reply";
 
@@ -19,6 +20,7 @@ export async function getNotifications(filter: NotificationFilter = "all") {
   };
 
   if (filter === "unread") where.readAt = null;
+  if (filter === "diary") where.type = NotificationType.DIARY_PUBLISHED;
   if (filter === "comment") where.type = NotificationType.COMMENT;
   if (filter === "reply") where.type = NotificationType.REPLY;
 

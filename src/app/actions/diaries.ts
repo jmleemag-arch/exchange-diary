@@ -4,8 +4,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/auth/session";
-import { makePreview, toEntryDate } from "@/lib/date";
-import { DiaryStatus, Prisma } from "@prisma/client";
+import { makePreview, snippet, toEntryDate } from "@/lib/date";
+import { DiaryStatus, NotificationType, Prisma } from "@prisma/client";
 
 export async function saveDraft(content: string) {
   const user = await requireUser();
@@ -68,12 +68,14 @@ export async function publishDiary(content: string) {
     throw new Error("오늘은 이미 공개한 일기가 있어요. 수정 화면을 이용해 주세요.");
   }
 
+  const preview = makePreview(trimmed);
+
   const diary = existing
     ? await prisma.diary.update({
         where: { id: existing.id },
         data: {
           content: trimmed,
-          preview: makePreview(trimmed),
+          preview,
           status: DiaryStatus.PUBLISHED,
           publishedAt: new Date(),
         },
@@ -82,15 +84,39 @@ export async function publishDiary(content: string) {
         data: {
           authorId: user.id,
           content: trimmed,
-          preview: makePreview(trimmed),
+          preview,
           entryDate,
           status: DiaryStatus.PUBLISHED,
           publishedAt: new Date(),
         },
       });
 
+  const partners = await prisma.user.findMany({
+    where: {
+      loginKey: { in: ["jimin", "minwoo"] },
+      NOT: { id: user.id },
+    },
+    include: { preference: true },
+  });
+
+  for (const partner of partners) {
+    if (partner.preference?.notifyDiary === false) continue;
+
+    await prisma.notification.create({
+      data: {
+        recipientId: partner.id,
+        actorId: user.id,
+        type: NotificationType.DIARY_PUBLISHED,
+        diaryId: diary.id,
+        message: `${user.nickname}님이 새로운 일기를 작성했어요`,
+        snippet: snippet(preview),
+      },
+    });
+  }
+
   revalidatePath("/");
   revalidatePath("/diaries");
+  revalidatePath("/notifications");
   revalidatePath(`/diaries/${diary.id}`);
   redirect(`/diaries/${diary.id}`);
 }

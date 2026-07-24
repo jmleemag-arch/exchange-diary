@@ -125,6 +125,7 @@ model Notification {
 enum NotificationType {
   COMMENT
   REPLY
+  DIARY_PUBLISHED
 }
 
 model DailyQuestion {

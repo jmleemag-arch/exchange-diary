@@ -9,6 +9,7 @@ import { useTransition } from "react";
 const filters: { id: NotificationFilter; label: string }[] = [
   { id: "all", label: "전체" },
   { id: "unread", label: "읽지 않음" },
+  { id: "diary", label: "일기" },
   { id: "comment", label: "댓글" },
   { id: "reply", label: "답글" },
 ];

@@ -1,7 +1,7 @@
 import { markNotificationRead } from "@/app/actions/notifications";
 import { formatRelativeTime } from "@/lib/date";
 import type { NotificationType } from "@prisma/client";
-import { Heart, MessageCircle, Pencil } from "lucide-react";
+import { Heart, MessageCircle, Pencil, BookOpen } from "lucide-react";
 import Image from "next/image";
 
 const typeIcon: Record<
@@ -15,6 +15,10 @@ const typeIcon: Record<
   REPLY: {
     Icon: Heart,
     className: "bg-[#ef7f8d] text-white",
+  },
+  DIARY_PUBLISHED: {
+    Icon: BookOpen,
+    className: "bg-accent text-white",
   },
 };
 

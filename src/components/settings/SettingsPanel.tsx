@@ -193,7 +193,7 @@ export function SettingsPanel({
         <section className="rounded-[20px] border border-border bg-surface p-5 shadow-[var(--shadow-sm)]">
           <h2 className="mb-4 text-[16px] font-semibold">알림 환경설정</h2>
           <label className="mb-3 flex items-center justify-between gap-3 text-sm">
-            <span>일기 관련 알림 (예약)</span>
+            <span>상대 일기 공개 알림</span>
             <input
               type="checkbox"
               checked={prefDiary}
