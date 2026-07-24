@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 const items = [
   { id: "today", label: "오늘", href: "/", Icon: SunMedium },
   { id: "list", label: "목록", href: "/diaries", Icon: List },
-  { id: "write", label: "작성", href: "#", Icon: Plus, primary: true },
+  { id: "write", label: "작성", href: "/diaries/new", Icon: Plus, primary: true },
   {
     id: "notifications",
     label: "알림",
@@ -28,12 +28,15 @@ export function MobileBottomNav() {
             item.id === "today"
               ? pathname === "/"
               : item.id === "list"
-                ? pathname.startsWith("/diaries")
-                : item.id === "notifications"
-                  ? pathname.startsWith("/notifications")
-                  : item.id === "settings"
-                    ? pathname.startsWith("/settings")
-                    : false;
+                ? pathname.startsWith("/diaries") &&
+                  !pathname.startsWith("/diaries/new")
+                : item.id === "write"
+                  ? pathname.startsWith("/diaries/new")
+                  : item.id === "notifications"
+                    ? pathname.startsWith("/notifications")
+                    : item.id === "settings"
+                      ? pathname.startsWith("/settings")
+                      : false;
 
           if ("primary" in item && item.primary) {
             return (

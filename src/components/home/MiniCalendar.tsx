@@ -1,6 +1,5 @@
 "use client";
 
-import { calendar } from "@/data/home";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -17,12 +16,23 @@ function buildCells(year: number, month: number) {
   return cells;
 }
 
-export function MiniCalendar() {
-  const [year, setYear] = useState(calendar.year);
-  const [month, setMonth] = useState(calendar.month);
+type MiniCalendarProps = {
+  initialYear: number;
+  initialMonth: number;
+  markedDays: number[];
+  today: number;
+};
+
+export function MiniCalendar({
+  initialYear,
+  initialMonth,
+  markedDays,
+  today,
+}: MiniCalendarProps) {
+  const [year, setYear] = useState(initialYear);
+  const [month, setMonth] = useState(initialMonth);
   const cells = useMemo(() => buildCells(year, month), [year, month]);
-  const isBase =
-    year === calendar.year && month === calendar.month;
+  const isBase = year === initialYear && month === initialMonth;
 
   return (
     <section className="rounded-[22px] bg-surface p-5 shadow-[var(--shadow-sm)]">
@@ -71,8 +81,8 @@ export function MiniCalendar() {
       <div className="grid grid-cols-7 text-center text-sm">
         {cells.map((day, i) => {
           if (day === null) return <div key={`e-${i}`} className="aspect-square" />;
-          const today = isBase && day === calendar.today;
-          const marked = isBase && calendar.markedDays.includes(day);
+          const isToday = isBase && day === today;
+          const marked = isBase && markedDays.includes(day);
           return (
             <div
               key={day}
@@ -80,20 +90,25 @@ export function MiniCalendar() {
             >
               <span
                 className={`flex h-8 w-8 items-center justify-center rounded-full text-[13px] ${
-                  today
+                  isToday
                     ? "bg-accent font-semibold text-white"
                     : "text-text-primary"
                 }`}
               >
                 {day}
               </span>
-              {marked && !today ? (
+              {marked && !isToday ? (
                 <span className="absolute bottom-1 h-1 w-1 rounded-full bg-success" />
               ) : null}
             </div>
           );
         })}
       </div>
+      {!isBase ? (
+        <p className="mt-2 text-center text-[11px] text-text-muted">
+          다른 달의 점은 홈에서 해당 월로 보면 표시돼요.
+        </p>
+      ) : null}
     </section>
   );
 }

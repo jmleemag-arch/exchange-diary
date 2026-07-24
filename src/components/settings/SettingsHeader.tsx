@@ -1,8 +1,11 @@
-import { currentUser } from "@/data/home";
+import { getCurrentUser } from "@/lib/auth/session";
 import { Bell, ChevronDown, Settings } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
-export function SettingsHeader() {
+export async function SettingsHeader() {
+  const user = await getCurrentUser();
+
   return (
     <header className="mb-5 flex items-start justify-between gap-4">
       <div>
@@ -16,27 +19,25 @@ export function SettingsHeader() {
       </div>
 
       <div className="hidden items-center gap-3 lg:flex">
-        <button
-          type="button"
+        <Link
+          href="/notifications"
           aria-label="알림"
           className="relative flex h-10 w-10 items-center justify-center rounded-full bg-surface text-text-secondary shadow-[var(--shadow-sm)]"
         >
           <Bell className="h-[18px] w-[18px]" />
-          <span className="absolute right-2.5 top-2.5 h-1.5 w-1.5 rounded-full bg-accent" />
-        </button>
-        <button
-          type="button"
-          className="flex items-center gap-2 rounded-full bg-surface py-1 pl-1 pr-3 shadow-[var(--shadow-sm)]"
-        >
-          <Image
-            src={currentUser.avatar}
-            alt={currentUser.name}
-            width={36}
-            height={36}
-            className="h-9 w-9 rounded-full object-cover"
-          />
+        </Link>
+        <div className="flex items-center gap-2 rounded-full bg-surface py-1 pl-1 pr-3 shadow-[var(--shadow-sm)]">
+          {user?.avatarUrl ? (
+            <Image
+              src={user.avatarUrl}
+              alt={user.nickname}
+              width={36}
+              height={36}
+              className="h-9 w-9 rounded-full object-cover"
+            />
+          ) : null}
           <ChevronDown className="h-4 w-4 text-text-muted" />
-        </button>
+        </div>
       </div>
     </header>
   );

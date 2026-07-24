@@ -2,22 +2,20 @@ import {
   Bell,
   CalendarDays,
   Heart,
-  Images,
   List,
-  MessageCircleHeart,
   Settings,
   SunMedium,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { DevDbStatus } from "@/components/dev/DevDbStatus";
-import { heroImage, navItems, together } from "@/data/home";
+import { heroImage, navItems } from "@/data/home";
+import { daysTogether } from "@/lib/date";
+import { prisma } from "@/lib/prisma";
 
 const icons = {
   today: SunMedium,
   list: List,
-  questions: MessageCircleHeart,
-  moments: Images,
   notifications: Bell,
   settings: Settings,
 } as const;
@@ -26,7 +24,13 @@ type AppSidebarProps = {
   activeId?: string;
 };
 
-export function AppSidebar({ activeId = "today" }: AppSidebarProps) {
+export async function AppSidebar({ activeId = "today" }: AppSidebarProps) {
+  const couple = await prisma.coupleSettings.findUnique({ where: { id: 1 } });
+  const togetherDays = couple ? daysTogether(couple.startedAt) : 0;
+  const sinceLabel = couple
+    ? `${couple.startedAt.getUTCFullYear()}.${String(couple.startedAt.getUTCMonth() + 1).padStart(2, "0")}.${String(couple.startedAt.getUTCDate()).padStart(2, "0")}부터`
+    : "";
+
   return (
     <aside className="hidden h-screen w-[240px] shrink-0 flex-col border-r border-border bg-surface px-5 py-7 lg:flex">
       <Link href="/" className="mb-9 flex items-center gap-2.5 px-1">
@@ -40,7 +44,7 @@ export function AppSidebar({ activeId = "today" }: AppSidebarProps) {
 
       <nav className="flex flex-1 flex-col gap-1.5">
         {navItems.map((item) => {
-          const Icon = icons[item.id];
+          const Icon = icons[item.id as keyof typeof icons];
           const active = item.id === activeId;
 
           return (
@@ -70,9 +74,9 @@ export function AppSidebar({ activeId = "today" }: AppSidebarProps) {
             <span className="text-xs font-medium">우리가 함께한 시간</span>
           </div>
           <p className="text-[24px] font-semibold tracking-tight text-text-primary">
-            D + {together.days}
+            D + {togetherDays}
           </p>
-          <p className="mt-1 text-xs text-text-muted">{together.since}</p>
+          <p className="mt-1 text-xs text-text-muted">{sinceLabel}</p>
           <DevDbStatus />
         </div>
 
