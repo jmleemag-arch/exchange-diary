@@ -4,7 +4,7 @@ export const navItems = [
   { id: "questions", label: "공통 질문", href: "#" },
   { id: "moments", label: "Our Moments", href: "#" },
   { id: "notifications", label: "알림", href: "/notifications" },
-  { id: "settings", label: "설정", href: "#" },
+  { id: "settings", label: "설정", href: "/settings" },
 ] as const;
 
 export const writers = [

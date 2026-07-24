@@ -14,7 +14,7 @@ const items = [
     href: "/notifications",
     Icon: Bell,
   },
-  { id: "settings", label: "설정", href: "#", Icon: Settings },
+  { id: "settings", label: "설정", href: "/settings", Icon: Settings },
 ] as const;
 
 export function MobileBottomNav() {
@@ -31,7 +31,9 @@ export function MobileBottomNav() {
                 ? pathname.startsWith("/diaries")
                 : item.id === "notifications"
                   ? pathname.startsWith("/notifications")
-                  : false;
+                  : item.id === "settings"
+                    ? pathname.startsWith("/settings")
+                    : false;
 
           if ("primary" in item && item.primary) {
             return (
